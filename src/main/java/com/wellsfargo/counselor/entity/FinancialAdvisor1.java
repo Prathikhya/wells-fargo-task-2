@@ -1,7 +1,12 @@
-package com.wellsfargo.counselor.entities;
+package com.wellsfargo.counselor.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
 import java.util.List;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class FinancialAdvisor1 {
@@ -13,24 +18,25 @@ public class FinancialAdvisor1 {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @OneToMany(mappedBy = "financialAdvisor", cascade = CascadeType.ALL)
+    // One-to-many relationship with Client
+    @OneToMany(mappedBy = "financialAdvisor1")
     private List<Client> clients;
 
     // Constructor
-    public FinancialAdvisor1(String name, String email, List<Client> clients) {
+    public FinancialAdvisor1(String name) {
         this.name = name;
-        this.email = email;
-        this.clients = clients;
     }
 
-    public FinancialAdvisor1() {} // Default constructor for JPA
+    // Default constructor
+    public FinancialAdvisor1() {}
 
     // Getters and Setters
     public Long getAdvisorId() {
         return advisorId;
+    }
+
+    public void setAdvisorId(Long advisorId) {
+        this.advisorId = advisorId;
     }
 
     public String getName() {
@@ -40,22 +46,4 @@ public class FinancialAdvisor1 {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<Client> getClients() {
-        return clients;
-    }
-
-    public void setClients(List<Client> clients) {
-        this.clients = clients;
-    }
-
-
 }

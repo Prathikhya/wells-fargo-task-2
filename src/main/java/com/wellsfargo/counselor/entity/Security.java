@@ -1,6 +1,11 @@
-package com.wellsfargo.counselor.entities;
-import javax.persistence.*;
-import java.time.LocalDate;
+package com.wellsfargo.counselor.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Security {
@@ -9,10 +14,6 @@ public class Security {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long securityId;
 
-    @ManyToOne
-    @JoinColumn(name = "portfolio_id", nullable = false)
-    private Portfolio portfolio;
-
     @Column(nullable = false)
     private String name;
 
@@ -20,24 +21,29 @@ public class Security {
     private String category;
 
     @Column(nullable = false)
-    private LocalDate purchaseDate;
+    private String purchaseDate;
 
     @Column(nullable = false)
-    private double purchasePrice;
+    private Double purchasePrice;
 
     @Column(nullable = false)
     private int quantity;
 
+    // Many-to-one relationship with Portfolio
+    @ManyToOne
+    private Portfolio portfolio;
+
     // Constructor
-    public Security(Portfolio portfolio, String name, String category, LocalDate purchaseDate, double purchasePrice, int quantity) {
-        this.portfolio = portfolio;
+    public Security(String name, String category, String purchaseDate, Double purchasePrice, int quantity, Portfolio portfolio) {
         this.name = name;
         this.category = category;
         this.purchaseDate = purchaseDate;
         this.purchasePrice = purchasePrice;
         this.quantity = quantity;
+        this.portfolio = portfolio;
     }
 
+    // Default constructor
     public Security() {}
 
     // Getters and Setters
@@ -45,12 +51,8 @@ public class Security {
         return securityId;
     }
 
-    public Portfolio getPortfolio() {
-        return portfolio;
-    }
-
-    public void setPortfolio(Portfolio portfolio) {
-        this.portfolio = portfolio;
+    public void setSecurityId(Long securityId) {
+        this.securityId = securityId;
     }
 
     public String getName() {
@@ -69,19 +71,19 @@ public class Security {
         this.category = category;
     }
 
-    public LocalDate getPurchaseDate() {
+    public String getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(LocalDate purchaseDate) {
+    public void setPurchaseDate(String purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
-    public double getPurchasePrice() {
+    public Double getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(double purchasePrice) {
+    public void setPurchasePrice(Double purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
@@ -92,10 +94,12 @@ public class Security {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public Portfolio getPortfolio() {
+        return portfolio;
+    }
+
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
 }
-
-
-
-
-
-

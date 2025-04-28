@@ -1,31 +1,38 @@
-package com.wellsfargo.counselor.entities;
-import javax.persistence.*;
-import java.util.List;
+package com.wellsfargo.counselor.entity;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.CascadeType;
 
 @Entity
 public class Portfolio {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long portfolioId;
 
-    @OneToOne
-    @JoinColumn(name = "client_id", nullable = false)
+    // One-to-one relationship with Client
+    @OneToOne(cascade = CascadeType.ALL)
     private Client client;
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
-    private List<Security> securities;
-
     // Constructor
-    public Portfolio(Client client, List<Security> securities) {
+    public Portfolio(Client client) {
         this.client = client;
-        this.securities = securities;
     }
 
+    // Default constructor
     public Portfolio() {}
 
     // Getters and Setters
     public Long getPortfolioId() {
         return portfolioId;
+    }
+
+    public void setPortfolioId(Long portfolioId) {
+        this.portfolioId = portfolioId;
     }
 
     public Client getClient() {
@@ -34,13 +41,5 @@ public class Portfolio {
 
     public void setClient(Client client) {
         this.client = client;
-    }
-
-    public List<Security> getSecurities() {
-        return securities;
-    }
-
-    public void setSecurities(List<Security> securities) {
-        this.securities = securities;
     }
 }
