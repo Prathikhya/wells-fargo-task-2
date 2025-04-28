@@ -23,7 +23,7 @@ public class Client {
     private FinancialAdvisor1 financialAdvisor;
 
     // One-to-one relationship with Portfolio
-    @OneToOne(mappedBy = "clients")
+    @OneToOne(mappedBy = "client")
     private Portfolio portfolio;
 
     // Constructor
